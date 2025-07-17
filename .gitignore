@@ -27,6 +27,10 @@ go.work.sum
 # env file
 .env
 
+# other
+lambda.zip
+bootstrap
+
 # Editor/IDE
-# .idea/
-# .vscode/
+.idea/
+.vscode/
