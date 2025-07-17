@@ -1,0 +1,30 @@
+name: Build Go Lambda
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.20'
+
+    - name: Build Lambda binary
+      run: |
+        GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o bootstrap main.go
+        zip lambda.zip bootstrap
+
+    - name: Upload Lambda artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: lambda-package
+        path: lambda.zip
